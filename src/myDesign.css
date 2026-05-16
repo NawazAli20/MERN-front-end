@@ -5,3 +5,7 @@ h1{
     border: 2 px solid blue;
     border-radius: 10px;
 }
+.nav{
+    display: flex;
+    gap: 7px;
+}
