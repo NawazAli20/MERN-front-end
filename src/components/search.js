@@ -1,18 +1,47 @@
+import { useEffect, useState } from 'react';
 import {Link, useSearchParams} from 'react-router-dom'
-import StudentsDB from '../sources/studentDb';
+
+import {getStudents} from './apiHelperFunctions'; 
 
 function Search(){
     const [searchParams, setSearchParams] = useSearchParams({"name":""});
+    const [students, setStudents] = useState([]);
+    const [errMsg,setErrMsg] = useState("");
+    const [isLoading, setIsLoading] = useState(false); 
+
+    //fetch students 
+    useEffect(()=>{ 
+        async function fetchStudent(){
+            setStudents([]); 
+            setErrMsg("");
+            setIsLoading(true);
+            
+            const response = await getStudents(); 
+            if(response.ok){
+                const result = await response.json(); 
+                setStudents(result); 
+            }else{
+                setErrMsg("Student fetching error"); 
+            }
+            setIsLoading(false);
+        }
+        fetchStudent();
+    },[]);
+
+
 
     const searchText = searchParams.get("name")?.trim().toLowerCase(); 
-    let students = [];
+    let searchedStudents = students;
 
-    if(searchParams.get("name")){
-        students =  StudentsDB.filter(student=>student.name.toLowerCase().includes(searchText));
+    if(searchText){
+        searchedStudents =  students.filter(student=>student.name.toLowerCase().includes(searchText));
     }
 
     return(
         <>
+        {
+        isLoading && <p>Loading...</p>
+        }
         <h2>Search for a student by name:</h2>
         <input type='text'
         placeholder='John Doe'
@@ -23,13 +52,17 @@ function Search(){
             students.length>0 &&
             <ul>
                 {
-                    students.map(student=>
-                        <li key={student.id}>{student.id}: 
-                        <Link to={`/students/${student.id}`}>{student.name}</Link>
+                    searchedStudents.map(student=>
+                        <li key={student._id}>
+                        <Link to={`/students/${student._id}`}>{student.name}</Link>
                         </li>
                     )
                 }
+               
             </ul>
+        }
+         {
+            errMsg.length>0 && <p>{errMsg}</p>
         }
 
         </>
