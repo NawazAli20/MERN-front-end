@@ -3,12 +3,14 @@ import {Routes, Route, BrowserRouter, Link} from 'react-router-dom'
 import Students from './components/students';
 import StudentDetails from './components/studentDetails';
 import Search from './components/search';
+import AddStudent from './components/addStudent';
 
 function NavBar(){
     return(
         <>
             <nav className="nav">
                 <div><Link to='/students'>Students</Link></div>
+                <div><Link to='/students/add'>Add</Link></div>
                 <div><Link to='/search'>Search</Link></div>
             </nav>
         </>
@@ -25,6 +27,7 @@ function App(){
                 <Route path='/students' element={<Students/>}/>
                 <Route path='/search' element={<Search/>}/>
                 <Route path='/students/:id' element={<StudentDetails/>}/>
+                <Route path='/students/add' element={<AddStudent/>}/>
             </Routes>
 
             </BrowserRouter>

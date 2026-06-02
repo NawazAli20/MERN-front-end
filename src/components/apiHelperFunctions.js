@@ -10,4 +10,17 @@ async function getStudentById(id){
     return response;
 }
 
-export {getStudents, getStudentById};
+async function addAStudent(student){
+    const response = await fetch(`${apiEndPoint}/add`,{
+        method:"POST",
+        headers:{"content-type":"application/json"},
+        body:JSON.stringify(student)
+    });
+    if(response.ok)
+        return response;
+    else{
+        alert('Student is not added');
+    }
+}
+
+export {getStudents, getStudentById, addAStudent};
