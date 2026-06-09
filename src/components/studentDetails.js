@@ -1,4 +1,4 @@
-import {useParams} from 'react-router-dom'; 
+import {useParams, Link} from 'react-router-dom'; 
 // import StudentDb from "../sources/studentDb";
 import { getStudentById } from './apiHelperFunctions';
 import { useState, useEffect } from 'react';
@@ -32,13 +32,23 @@ function StudentDetails(){
         <>
             <h3>Student details:</h3>
             {
-                student? Object.entries(student).map(([key,value],index)=>
-                    <p key={index}>{key}: { typeof value === 'object'? JSON.stringify(value):value }</p>
-                ):
+                student?( 
+                    <>
+                    {
+                    Object.entries(student).map(([key,value],index)=>
+                        <p key={index}>{key}: { typeof value === 'object'? JSON.stringify(value):value }</p>
+                    )
+                    }
+                    <p><Link to={`/update/${student._id}`}>Update</Link></p>
+                </>
+            )
+                :
+                (
                 <p>{errMsg}</p>
+                )
             }
         </>
-    )
+    );
 }
 
 export default StudentDetails;

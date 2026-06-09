@@ -4,6 +4,7 @@ import Students from './components/students';
 import StudentDetails from './components/studentDetails';
 import Search from './components/search';
 import AddStudent from './components/addStudent';
+import UpdateStudent from './components/updateStudent';
 
 function NavBar(){
     return(
@@ -28,6 +29,7 @@ function App(){
                 <Route path='/search' element={<Search/>}/>
                 <Route path='/students/:id' element={<StudentDetails/>}/>
                 <Route path='/students/add' element={<AddStudent/>}/>
+                <Route path='/update/:id' element={<UpdateStudent/>}/>
             </Routes>
 
             </BrowserRouter>

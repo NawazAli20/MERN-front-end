@@ -23,4 +23,21 @@ async function addAStudent(student){
     }
 }
 
-export {getStudents, getStudentById, addAStudent};
+//update a student 
+async function updateAStudent(id,student){
+    const response = await fetch(`${apiEndPoint}/update/${id}`,
+        {
+            method:"PUT",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(student)
+        }
+    );
+    if(response.ok){
+        return response; 
+    }else{
+        alert("Update failed"); 
+    } 
+
+}
+
+export {getStudents, getStudentById, addAStudent, updateAStudent};
